@@ -1,0 +1,10 @@
+prometheus:
+  prometheusSpec:
+    additionalScrapeConfigs:
+      - job_name: 'jenkins'
+        metrics_path: '/prometheus'
+        static_configs:
+          - targets: ['192.168.122.200:8080']
+        basic_auth:
+          username: 'admin'
+          password: '11d74735c8a5a624c59d93626f5d703f61'
