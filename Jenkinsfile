@@ -15,7 +15,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/<your-username>/Netflix-clone.git'
+                git branch: 'main', url: 'https://github.com/hiteshsingh01/Netflix-clone.git'
             }
         }
 
