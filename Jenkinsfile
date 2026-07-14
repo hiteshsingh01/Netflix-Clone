@@ -9,6 +9,8 @@ pipeline {
         DOCKERHUB_CREDS = credentials('dockerhub-creds')
         IMAGE_NAME = 'hiteshsingh01/netflix-clone'
         KUBECONFIG = credentials('kubeconfig-file')
+        NVD_API_KEY = credentials('nvd-api-key')
+        TMDB_API_KEY = credentials('tmdb-api-key')
     }
     stages {
         stage('Clean Workspace') { steps { cleanWs() } }
@@ -41,7 +43,7 @@ pipeline {
 
         stage('OWASP Dependency Check') {
             steps {
-                dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit --nvdApiKey 56847a00-224d-42e1-bc18-c4655abddee2',
+                dependencyCheck additionalArguments: "--scan ./ --disableYarnAudit --disableNodeAudit --nvdApiKey ${NVD_API_KEY}",
                     odcInstallation: 'DP-Check'
                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
@@ -54,7 +56,7 @@ pipeline {
         stage('Docker Build & Tag') {
             steps {
                 sh """
-                  docker build --build-arg TMDB_V3_API_KEY=955c426faf81d17d10e3058724a42913 \
+                  docker build --build-arg TMDB_V3_API_KEY=${TMDB_API_KEY} \
                     -t $IMAGE_NAME:${BUILD_NUMBER} .
                   docker tag $IMAGE_NAME:${BUILD_NUMBER} $IMAGE_NAME:latest
                 """
