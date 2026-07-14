@@ -7,7 +7,7 @@ pipeline {
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
         DOCKERHUB_CREDS = credentials('dockerhub-creds')
-        IMAGE_NAME = 'yourdockerhubuser/netflix-clone'
+        IMAGE_NAME = 'hiteshsingh01/netflix-clone'
         KUBECONFIG = credentials('kubeconfig-file')
     }
     stages {
@@ -54,7 +54,7 @@ pipeline {
         stage('Docker Build & Tag') {
             steps {
                 sh """
-                  docker build --build-arg TMDB_V3_API_KEY=<your_tmdb_key> \
+                  docker build --build-arg TMDB_V3_API_KEY=955c426faf81d17d10e3058724a42913 \
                     -t $IMAGE_NAME:${BUILD_NUMBER} .
                   docker tag $IMAGE_NAME:${BUILD_NUMBER} $IMAGE_NAME:latest
                 """
